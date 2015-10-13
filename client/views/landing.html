@@ -1,6 +1,6 @@
-<div ng-hide='showTryOn || !showProducts' class="navbar">
+<div ng-hide='showTryOn || !showProducts || showThankYou' class="navbar">
 </div>
-<div ng-hide='showProducts || showTryOn' class="welcome">
+<div ng-hide='showProducts || showTryOn || showThankYou' class="welcome">
   <p class="intro first">you are the shopper</p>
   <div class="divider"></div>
   <p class="intro first">enter your name then try on one item</p>
@@ -13,23 +13,23 @@
     <p>Submit</p>
   </button>
 </div>
-<div class="welcome" ng-show='showTryOn'>
+<div class="welcome" ng-show='showTryOn && !showThankYou'>
   <p class="tryon">Customer Name: <span>{{customer.name}}</span></p>
   <p class="tryon">Product Selected: <span> {{productSelected.title}}</span></p>
   <div class="divider tryon"></div>
   <div class='btn-container'>
     <div class="inline-btn">
-      <p ng-click='like(product)'>like</p>
+      <p ng-click='likeItem(productSelected)'>like</p>
     </div>
     <div class="inline-btn">
-      <p ng-click='dislike(product)'>dislike</p>
+      <p ng-click='dislikeItem(productSelected)'>dislike</p>
     </div>
     <div class="inline-btn">
-      <p ng-click='newSize(product)'>new size</p>
+      <p ng-click='getNewSize(productSelected)'>new size</p>
     </div>
   </div>
 </div>
-<div class='container' ng-show='showProducts && !showTryOn'>
+<div class='container' ng-show='showProducts && !showTryOn && !showThankYou'>
   <div ng-repeat='product in products track by $index' class="product">
     <img ng-src="{{product.photo}}" />
     <p class="product-title">{{product.title}}</p>
@@ -38,4 +38,10 @@
       <p ng-click='tryOn(product)'>try on</p>
     </div>
   </div>
+</div>
+<div class="welcome" ng-show='showThankYou'>
+  <p class="intro first">associated notifed</p>
+  <button class='btn' ng-click='goAgain()'>
+    <p>Go Again</p>
+  </button>
 </div>
