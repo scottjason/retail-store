@@ -1,3 +1,41 @@
+/*salmon  b5736d*/
+
+.intro {
+  color: white;
+  position: relative;
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.salmon {
+  color: #80ccd2;
+}
+
+.divider {
+  position: absolute;
+  border: transparent;
+  border-bottom: 1px solid #80ccd2;
+  width: 400px;
+  margin: auto;
+  margin-bottom: 5px;
+  left: 0;
+  right: 0;
+}
+
+.intro.first {
+  padding-top: 10px;
+}
+
+.intro.third {
+  color: #80ccd2;
+}
+
+.intro.last {
+  margin-bottom: 50px;
+  padding-top: 10px;
+}
+
 .container,
 .welcome {
   position: absolute;
@@ -14,9 +52,8 @@
 
 .welcome {
   top: 0;
-  background: black;
-  height: 100px;
-  width: 400px;
+  height: 370px;
+  width: 450px;
 }
 
 .btn {
@@ -28,6 +65,7 @@
   border: 1px solid white;
   outline: 0;
   cursor: pointer;
+  border: 1px solid #80ccd2;
 }
 
 .btn p {

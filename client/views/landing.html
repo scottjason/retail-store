@@ -1,6 +1,13 @@
-<div ng-hide='showTryOn' class="navbar">
+<div ng-hide='showTryOn || !showProducts' class="navbar">
 </div>
 <div ng-hide='showProducts || showTryOn' class="welcome">
+<p class="intro first">you are the shopper</p>
+<div class="divider"></div>
+<p class="intro first">enter your name then try on one item</p>
+<p class="intro">you'll be given three options</p>
+<p class="intro orange">want, don't want, and need another size</p>
+<div class="divider"></div>
+<p class="intro last">your retail associate is <span class='salmon'>aware of how things are going</span> in real-time</p>
   <input class="name" ng-model='customer.name' placeholder='enter your name'>
   <button class='btn' ng-click='setName()'>
     <p>Submit</p>
