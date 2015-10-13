@@ -1,0 +1,113 @@
+.container,
+.welcome {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100px;
+  bottom: 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  background: black;
+  text-align: center;
+}
+
+.welcome {
+  top: 0;
+  background: black;
+  height: 100px;
+  width: 400px;
+}
+
+.btn {
+  width: 200px;
+  height: 40px;
+  border-radius: 30px;
+  margin-top: 30px;
+  background-color: transparent;
+  border: 1px solid white;
+  outline: 0;
+  cursor: pointer;
+}
+
+.btn p {
+  color: white;
+  font-size: 14px;
+}
+
+input {
+  position: relative;
+  display: block;
+  margin: auto;
+  height: 30px;
+  width: 250px;
+  border: transparent;
+  border-bottom: 1px solid white;
+  background: black;
+  color: white;
+  font-size: 14px;
+}
+
+.product {
+  position: relative;
+  display: inline-block;
+  width: 240px;
+  height: 340px;
+  margin: 20px 10px;
+  border: 1px solid rgba(225, 225, 225, .7);
+  background: black;
+  overflow: hidden;
+}
+
+.product-title {
+  color: white;
+  margin-top: 10px;
+}
+
+.product-cost {
+  color: white;
+}
+
+.cart-btn {
+  position: absolute;
+  width: 170px;
+  height: 30px;
+  background: white;
+  border-radius: 30px;
+  text-align: center;
+  margin: auto;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.cart-btn p {
+  color: rgba(0, 0, 0, .7);
+  font-size: 14px;
+  position: relative;
+  top: 4px;
+}
+
+.tryon-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 400px;
+  height: 340px;
+  background: white;
+  margin: auto;
+  text-align: center;
+  font-size: 12px;
+}
+
+.tryon-container p {
+  color: black;
+  position: relative;
+}
+
+.customer-name {
+  margin-top: 10px;
+}

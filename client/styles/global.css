@@ -1,0 +1,24 @@
+body {
+  background: black;
+  overflow-x: hidden;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+input {
+  outline: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+}

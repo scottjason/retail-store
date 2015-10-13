@@ -1,0 +1,24 @@
+<div ng-hide='showTryOn' class="navbar">
+</div>
+<div ng-hide='showProducts || showTryOn' class="welcome">
+  <input class="name" ng-model='customer.name' placeholder='enter your name'>
+  <button class='btn' ng-click='setName()'>
+    <p>Submit</p>
+  </button>
+</div>
+<div class='tryon-container' ng-show='showTryOn'>
+  <p class="customer-name">Customer Name: {{customer.name}}</p>
+  <p>Product Selected: {{productSelected.title}}</p>
+  <br>
+  <img ng-src="{{productSelected.photo}}" />
+</div>
+<div class='container' ng-show='showProducts && !showTryOn'>
+  <div ng-repeat='product in products track by $index' class="product">
+    <img ng-src="{{product.photo}}" />
+    <p class="product-title">{{product.title}}</p>
+    <p class="product-cost">{{product.cost}}</p>
+    <div class="cart-btn">
+      <p ng-click='tryOn(product)'>try on</p>
+    </div>
+  </div>
+</div>
