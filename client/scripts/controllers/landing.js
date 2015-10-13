@@ -68,6 +68,16 @@ function Landing($scope, $state, $timeout, RequestApi, $firebaseObject, $firebas
     $scope.showThankYou = true;
   };
 
+  $scope.getNewSize = function(product) {
+    var newSizeItems = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/newsize-items');
+    product.customerId = $scope.customer.id;
+    product.customerName = $scope.customer.name;
+    delete product.$id;
+    delete product.$priority;
+    newSizeItems.push(product);
+    $scope.showSizeRequested = true;
+  };
+
   $scope.goAgain = function() {
     var likedItems = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/liked-items');
     var dislikedItems = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/disliked-items');
