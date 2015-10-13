@@ -1,23 +1,33 @@
 <div ng-hide='showTryOn || !showProducts' class="navbar">
 </div>
 <div ng-hide='showProducts || showTryOn' class="welcome">
-<p class="intro first">you are the shopper</p>
-<div class="divider"></div>
-<p class="intro first">enter your name then try on one item</p>
-<p class="intro">you'll be given three options</p>
-<p class="intro orange">want, don't want, and need another size</p>
-<div class="divider"></div>
-<p class="intro last">your retail associate is <span class='salmon'>aware of how things are going</span> in real-time</p>
+  <p class="intro first">you are the shopper</p>
+  <div class="divider"></div>
+  <p class="intro first">enter your name then try on one item</p>
+  <p class="intro">you'll be given three options</p>
+  <p class="intro orange">want, don't want, and need another size</p>
+  <div class="divider"></div>
+  <p class="intro last">your retail associate is <span class='salmon'>aware of how things are going</span> in real-time</p>
   <input class="name" ng-model='customer.name' placeholder='enter your name'>
   <button class='btn' ng-click='setName()'>
     <p>Submit</p>
   </button>
 </div>
-<div class='tryon-container' ng-show='showTryOn'>
-  <p class="customer-name">Customer Name: {{customer.name}}</p>
-  <p>Product Selected: {{productSelected.title}}</p>
-  <br>
-  <img ng-src="{{productSelected.photo}}" />
+<div class="welcome" ng-show='showTryOn'>
+  <p class="tryon">Customer Name: <span>{{customer.name}}</span></p>
+  <p class="tryon">Product Selected: <span> {{productSelected.title}}</span></p>
+  <div class="divider tryon"></div>
+  <div class='btn-container'>
+    <div class="inline-btn">
+      <p ng-click='like(product)'>like</p>
+    </div>
+    <div class="inline-btn">
+      <p ng-click='dislike(product)'>dislike</p>
+    </div>
+    <div class="inline-btn">
+      <p ng-click='newSize(product)'>new size</p>
+    </div>
+  </div>
 </div>
 <div class='container' ng-show='showProducts && !showTryOn'>
   <div ng-repeat='product in products track by $index' class="product">
