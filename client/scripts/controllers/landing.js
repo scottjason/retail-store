@@ -20,6 +20,14 @@ function Landing($scope, $state, $timeout, RequestApi, $firebaseObject, $firebas
   }
 
   var init = function() {
+    var likedItems = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/liked-items');
+    var dislikedItems = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/disliked-items');
+    var fittinRoom = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/products');
+    var customers = new Firebase('https://retail-store-app.firebaseio.com/customers');
+    likedItems.remove();
+    dislikedItems.remove();
+    fittinRoom.remove();
+    customers.remove();
     var products = new Firebase('https://retail-store-app.firebaseio.com/products');
     $scope.products = $firebaseArray(products);
   };
@@ -79,14 +87,6 @@ function Landing($scope, $state, $timeout, RequestApi, $firebaseObject, $firebas
   };
 
   $scope.goAgain = function() {
-    var likedItems = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/liked-items');
-    var dislikedItems = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/disliked-items');
-    var fittinRoom = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/products');
-    var customers = new Firebase('https://retail-store-app.firebaseio.com/customers');
-    likedItems.remove();
-    dislikedItems.remove();
-    fittinRoom.remove();
-    customers.remove();
     $state.go($state.current, {}, {
       reload: true
     });
