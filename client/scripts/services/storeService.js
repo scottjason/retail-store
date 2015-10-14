@@ -29,11 +29,24 @@ function StoreService($firebaseArray) {
     cb(product, fittinRoom);
   }
 
+  function generateSelectedItem(productSelected, isLikedItem, cb) {
+    var likedItems = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/liked-items');
+    var disLikedItems = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/disliked-items');
+
+    delete productSelected.$id;
+    delete productSelected.$priority;
+    if (isLikedItem) {
+      cb(productSelected, likedItems);
+    } else {
+      cb(productSelected, disLikedItems);
+    }
+  }
+
   return {
+    generateUUID: generateUUID,
     generateProducts: generateProducts,
     generateFittingRoom: generateFittingRoom,
-    generateUUID: generateUUID,
-
+    generateSelectedItem: generateSelectedItem
   }
   StoreService.$inject['$firebaseArray'];
 }

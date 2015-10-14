@@ -3,7 +3,7 @@
 angular.module('BoilerPlate')
   .controller('Landing', Landing);
 
-function Landing($scope, $state, $timeout, StoreService, $firebase, $firebaseObject) {
+function Landing($scope, $state, $timeout, StoreService, RecommendationService) {
 
   // Initial Declarations
   var fittinRoom = {};
@@ -17,7 +17,7 @@ function Landing($scope, $state, $timeout, StoreService, $firebase, $firebaseObj
   $scope.products = [];
   $scope.productSelected = {};
 
-  function init(cb) {
+  var init = function(cb) {
     // garbage out on load
     likedItems.remove();
     dislikedItems.remove();
@@ -29,8 +29,6 @@ function Landing($scope, $state, $timeout, StoreService, $firebase, $firebaseObj
     StoreService.generateProducts(function(products) {
       $scope.products = products;
     });
-
-    // bind event listeners
     cb();
   }
 
@@ -78,77 +76,38 @@ function Landing($scope, $state, $timeout, StoreService, $firebase, $firebaseObj
   $scope.likeItem = function(product) {
     var isRecommendItem = product.isRecommendItem;
     if (!isRecommendItem) {
-      $scope.productSelected.title = product.title
-      var likedItems = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/liked-items');
-      $scope.productSelected.customerId = $scope.customer.id;
-      $scope.productSelected.customerName = $scope.customer.name;
-      delete $scope.productSelected.$id;
-      delete $scope.productSelected.$priority;
-      likedItems.push($scope.productSelected);
-      $scope.showThankYou = true;
-    } else {
-      console.log('else called')
-      var ref = new Firebase('https://retail-store-app.firebaseio.com/recommendations');
-      var id;
-      var score;
-
-      var target = {};
-      target.firstShownName = product.firstShown.title;
-      target.recommendedName = product.title;
-
-      ref.once("value", function(snapshot) {
-          var obj = snapshot.val();
-          angular.forEach(obj, function(incoming, key) {
-            console.log('iterating', incoming, key)
-            var isMatch = (incoming.firstShownName === target.firstShownName && incoming.recommendedName === target.recommendedName);
-            if (isMatch) {
-              console.log('found match')
-              id = key;
-              score = (incoming.score + 1);
-            }
-          });
-          if (id) {
-            console.log(score)
-            var ref = new Firebase('https://retail-store-app.firebaseio.com/recommendations/' + id);
-            ref.update({
-              score: score
-            });
-          } else {
-            var ref = new Firebase('https://retail-store-app.firebaseio.com/recommendations/');
-            var obj = {};
-            obj.firstShownName = target.firstShownName;
-            obj.recommendedName = target.recommendedName;
-            obj.score = 1;
-            ref.push(obj);
-          }
-        },
-        function(errorObject) {
-          console.log("The read failed: " + errorObject.code);
+      StoreService.generateSelectedItem(product, true, function(productSelected, likedItems) {
+        $timeout(function() {
+          $scope.productSelected.title = productSelected.title;
+          $scope.productSelected.customerId = $scope.customer.id;
+          $scope.productSelected.customerName = $scope.customer.name;
+          likedItems.push($scope.productSelected);
         });
-
+      });
+    } else {
+      RecommendationService.save(product, true);
     }
   };
 
-  $scope.dislikeItem = function(product) {
+  $scope.disLikeItem = function(product) {
     var isRecommendItem = product.isRecommendItem;
     if (!isRecommendItem) {
-      var dislikedItems = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/disliked-items');
-      product.customerId = $scope.customer.id;
-      product.customerName = $scope.customer.name;
-      delete product.$id;
-      delete product.$priority;
-      dislikedItems.push(product);
-      $scope.showLoader = true;
+      StoreService.generateSelectedItem(product, false, function(productSelected, disLikedItems) {
+        $timeout(function() {
+          disLikedItems.push($scope.productSelected);
+          $scope.showLoader = true;
+        });
+      });
     } else {
-      console.log('is a disliked recommened item');
+      RecommendationService.save(product, false);
     }
   };
 
-  $scope.goAgain = function() {
+  $scope.reset = function() {
     $state.go($state.current, {}, {
       reload: true
     });
   };
 
-  Landing.$inject['$scope', '$state', '$timeout', 'StoreService', '$firebase', '$firebaseObject'];
+  Landing.$inject['$scope', '$state', '$timeout', 'StoreService', 'RecommendationService'];
 }
