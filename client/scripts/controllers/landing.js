@@ -77,7 +77,6 @@ function Landing($scope, $state, $timeout, RequestApi, $firebase, $firebaseObjec
   };
 
   $scope.likeItem = function(product) {
-    console.log('like item called');
     var isRecommendItem = product.isRecommendItem;
     if (!isRecommendItem) {
       $scope.productSelected.title = product.title
@@ -92,121 +91,39 @@ function Landing($scope, $state, $timeout, RequestApi, $firebase, $firebaseObjec
       console.log('is a liked recommened item');
       var ref = new Firebase('https://retail-store-app.firebaseio.com/recommendations');
 
+      var id;
+      var score;
+
       var target = {};
       target.firstShownName = product.firstShown.title;
       target.recommendedName = product.title;
 
-
-      // save new object
-      // var obj = {};
-      // obj.firstShownName = target.firstShownName;
-      // obj.recommendedName = target.recommendedName;
-      // obj.score = 1;
-      // ref.push(obj);
-
-      var foundMatch = null;
       var obj = $firebaseObject(ref);
 
-      // to take an action after the data loads, use the $loaded() promise
       obj.$loaded().then(function() {
-
-        var incoming = {};
-        var id;
-        var score;
 
         angular.forEach(obj, function(incoming, key) {
           var isMatch = (incoming.firstShownName === target.firstShownName && incoming.recommendedName === target.recommendedName);
           if (isMatch) {
             id = key;
             score = incoming.score + 1;
-            console.log('found match')
           }
         });
         if (id) {
           var ref = new Firebase('https://retail-store-app.firebaseio.com/recommendations/' + id);
-          console.log('updating ref score', score);
           ref.update({
             score: score
           });
+        } else {
+          var obj = {};
+          obj.firstShownName = target.firstShownName;
+          obj.recommendedName = target.recommendedName;
+          obj.score = 1;
+          ref.push(obj);
         }
-        // var key = 'https://retail-store-app.firebaseio.com/recommendations/' + match.key;
-        // ref.set()
-
-        // var arr = [];
-        // // To iterate the key/value pairs of the object, use angular.forEach()
-        // _.each(obj, function(value, key) {
-        //   console.log('value', value);
-        //   console.log('key', key);
-        //   if (arr.length < 3) {
-        //     arr.push(value);
-        //   }
-        //   if (arr.length === 3) {
-        //     console.log('arr[0', arr[0]);
-        //     console.log('arr[1', arr[1]);
-        //     console.log('arr[2', arr[2]);
-        //     var isMatch = (arr[0] === target.firstShownName && target.recommendedName === arr[1]);
-        //     if (isMatch) {
-        //       console.log('found match');
-        //       console.log(value);
-        //       value++
-        //       arr = [];
-        //     }
-        //   }
-        // });
-        // // console.log('done iterating', obj);
-        // // obj.$save().then(function(ref) {
-        // //   console.log(ref);
-        // //   console.log(ref.key() === obj.$id); // true
-        // //   console.log('saved');
-        // // }, function(error) {
-        // //   console.log("Error:", error);
-        // // });
-        // ref.set(obj);
       });
-
-      return;
-
-
-      //   // ref.on("value", function(snapshot) {
-      //   console.log('value called on recommendations ref');
-      //   if ($scope.isIterating) return;
-      //   var recommendations = snapshot.val();
-
-      //   $scope.isIterating = true;
-
-      //   _.each(recommendations, function(obj, key) {
-      //     console.log('incoming obj', obj);
-      //     console.log('incoming key', key);
-      //     var incoming = {};
-      //     incoming.firstShownName = obj.firstShownName;
-      //     incoming.recommendedName = obj.recommendedName;
-      //     var isMatch = ((incoming.firstShownName === target.firstShownName) && (target.recommendedName === target.recommendedName));
-      //     if (isMatch) {
-      //       console.debug('found match');
-      //       foundMatch = true;
-      //       obj.score++
-      //     } else {
-      //       console.log('no match found');
-      //     }
-      //   });
-      //   ref.set(recommendations);
-      //   // });
-      //   $scope.isIterating = false;
-      //   // //   // after the iteration is complete, check if a match was found
-      //   if (!foundMatch) {
-      //     // if not create and save the new association
-      //     console.log('no match found');
-      //     var recommendations = new Firebase('https://retail-store-app.firebaseio.com/recommendations');
-      //     var obj = {};
-      //     obj.firstShownName = target.firstShownName;
-      //     obj.recommendedName = target.recommendedName;
-      //     obj.score = 1;
-      //     recommendations.set(obj);
-      //   }
     }
-
   };
-
 
   $scope.dislikeItem = function(product) {
     var isRecommendItem = product.isRecommendItem;
