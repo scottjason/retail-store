@@ -1,50 +1,50 @@
-<div ng-hide='showTryOn || !showProducts || showThankYou || showLoader' class="navbar">
-</div>
-<div ng-hide='showProducts || showTryOn || showThankYou || showLoader' class="welcome">
-  <p class="intro first">you are the shopper</p>
-  <div class="divider"></div>
-  <p class="intro first">enter your name then try on one item</p>
-  <p class="intro">you'll be given three options</p>
-  <p class="intro orange">want, don't want, and need another size</p>
-  <div class="divider"></div>
-  <p class="intro last">your retail associate is <span class='salmon'>aware of how things are going</span> in real-time</p>
-  <input class="name" ng-model='customer.name' placeholder='enter your name'>
-  <button class='btn' ng-click='setName()'>
-    <p>Submit</p>
+<div class="welcome" ng-show='showComplete'>
+  <button class='btn reset' ng-click='reset();'>
+    <p>Go again</p>
   </button>
 </div>
-<div class="welcome" ng-show='showTryOn && !showThankYou && !showLoader'>
-  <p ng-if='showRecommendation' class="tryon">Recommended Item</p>
-
-  <p class="tryon">Customer Name: <span>{{customer.name}}</span></p>
-  <p class="tryon">Product Selected: <span> {{productSelected.title}}</span></p>
-  <div class="divider tryon"></div>
-  <div class='btn-container'>
-    <div class="inline-btn">
-      <p ng-click='likeItem(productSelected)'>like</p>
-    </div>
-    <div class="inline-btn">
-      <p ng-click='disLikeItem(productSelected)'>dislike</p>
+<div ng-hide='showComplete'>
+  <div ng-hide='showTryOn || !showProducts || showLoader' class="navbar">
+  </div>
+  <div ng-hide='showProducts || showTryOn || showLoader' class="welcome">
+    <p class="intro first">you are the shopper</p>
+    <div class="divider"></div>
+    <p class="intro first">enter your name then try on one item</p>
+    <p class="intro">you'll be given three options</p>
+    <p class="intro orange">want, don't want, and need another size</p>
+    <div class="divider"></div>
+    <p class="intro last">your retail associate is <span class='salmon'>aware of how things are going</span> in real-time</p>
+    <input class="name" ng-model='customer.name' placeholder='enter your name'>
+    <button class='btn' ng-click='setName()'>
+      <p>Submit</p>
+    </button>
+  </div>
+  <div class="welcome" ng-show='showTryOn && !showLoader'>
+    <p ng-if='showRecommendation' class="tryon">Recommended Item</p>
+    <p class="tryon">Customer Name: <span>{{customer.name}}</span></p>
+    <p class="tryon">Product Selected: <span> {{productSelected.title}}</span></p>
+    <div class="divider tryon"></div>
+    <div class='btn-container'>
+      <div class="inline-btn">
+        <p ng-click='likeItem(productSelected)'>like</p>
+      </div>
+      <div class="inline-btn">
+        <p ng-click='disLikeItem(productSelected)'>dislike</p>
+      </div>
     </div>
   </div>
-</div>
-<div class='container' ng-show='showProducts && !showTryOn && !showThankYou && !showLoader'>
-  <div ng-repeat='product in products track by $index' class="product">
-    <img ng-src="{{product.photo}}" />
-    <p class="product-title">{{product.title}}</p>
-    <p class="product-cost">{{product.cost}}</p>
-    <div class="cart-btn">
-      <p ng-click='tryItem(product)'>try on</p>
+  <div class='container' ng-show='showProducts && !showTryOn && !showLoader'>
+    <div ng-repeat='product in products track by $index' class="product">
+      <img ng-src="{{product.photo}}" />
+      <p class="product-title">{{product.title}}</p>
+      <p class="product-cost">{{product.cost}}</p>
+      <div class="cart-btn">
+        <p ng-click='tryItem(product)'>try on</p>
+      </div>
     </div>
   </div>
-</div>
-<div class="welcome" ng-show='showLoader'>
-  <div class="loader"></div>
-  <p class="intro first">waiting on recommendation</p>
-</div>
-<div class="welcome" ng-show='showThankYou && !showLoader'>
-  <p class="intro first">associated notifed</p>
-  <button class='btn' ng-click='goAgain()'>
-    <p>Go Again</p>
-  </button>
+  <div class="welcome" ng-show='showLoader'>
+    <div class="loader"></div>
+    <p class="intro first">waiting on recommendation</p>
+  </div>
 </div>

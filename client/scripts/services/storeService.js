@@ -36,6 +36,10 @@ function StoreService($firebaseArray) {
     delete productSelected.$id;
     delete productSelected.$priority;
     if (isLikedItem) {
+      var ref = new Firebase('https://retail-store-app.firebaseio.com/completed');
+      var obj = {};
+      obj.completedAt = new Date().toString();
+      ref.push(obj);
       cb(productSelected, likedItems);
     } else {
       cb(productSelected, disLikedItems);

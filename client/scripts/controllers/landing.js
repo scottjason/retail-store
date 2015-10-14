@@ -12,6 +12,7 @@ function Landing($scope, $state, $timeout, StoreService, RecommendationService) 
   fittinRoom.recommendations = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/recommendations');
   fittinRoom.products = new Firebase('https://retail-store-app.firebaseio.com/fitting-room/products');
   var customers = new Firebase('https://retail-store-app.firebaseio.com/customers');
+  var completed = new Firebase('https://retail-store-app.firebaseio.com/completed');
 
   $scope.customer = {};
   $scope.products = [];
@@ -24,7 +25,7 @@ function Landing($scope, $state, $timeout, StoreService, RecommendationService) 
     fittinRoom.products.remove();
     customers.remove();
     fittinRoom.recommendations.remove();
-
+    completed.remove();
     // get prodcuts from firebase
     StoreService.generateProducts(function(products) {
       $scope.products = products;
@@ -87,6 +88,9 @@ function Landing($scope, $state, $timeout, StoreService, RecommendationService) 
     } else {
       RecommendationService.save(product, true);
     }
+    $timeout(function() {
+      $scope.showComplete = true;
+    }, 250);
   };
 
   $scope.disLikeItem = function(product) {
@@ -100,6 +104,9 @@ function Landing($scope, $state, $timeout, StoreService, RecommendationService) 
       });
     } else {
       RecommendationService.save(product, false);
+      $timeout(function() {
+        $scope.showComplete = true;
+      }, 250);
     }
   };
 

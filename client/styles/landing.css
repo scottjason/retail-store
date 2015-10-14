@@ -72,6 +72,10 @@
   border: 1px solid #80ccd2;
 }
 
+.btn.reset {
+  margin-top: 0;
+}
+
 .inline-btn {
   position: relative;
   display: inline-block;

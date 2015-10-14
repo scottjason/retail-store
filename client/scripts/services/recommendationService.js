@@ -6,7 +6,7 @@ angular.module('BoilerPlate')
 function RecommendationService() {
 
   function save(product, isLikedItem) {
-    
+
     var id, score;
     var ref = new Firebase('https://retail-store-app.firebaseio.com/recommendations');
 
@@ -37,6 +37,10 @@ function RecommendationService() {
           obj.score = 1;
           ref.push(obj);
         }
+        var ref = new Firebase('https://retail-store-app.firebaseio.com/completed');
+        var obj = {};
+        obj.completedAt = new Date().toString();
+        ref.push(obj);
       },
       function(errorObject) {
         console.log("The read failed: " + errorObject.code);
