@@ -1,1 +1,1 @@
-# responsive-boilerplate
+retail-store-web
